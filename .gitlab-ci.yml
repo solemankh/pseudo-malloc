@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+
+variables:
+  CC: "gcc"
+  CFLAGS: "-O2 -g -std=c17 -Wall -Wextra -Wpedantic -Wconversion -fPIC"
+
+build:
+  stage: build
+  image: gcc:latest
+  script:
+    - make
+  artifacts:
+    paths:
+      - build/
+
+valgrind_test:
+  stage: test
+  image: debian:stable
+  needs: ["build"]
+  before_script:
+    - apt-get update && apt-get install -y valgrind make gcc
+  script:
+    - make
+    - ./build/test_alloc
+    - valgrind --leak-check=full --show-leak-kinds=all ./build/test_alloc

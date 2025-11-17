@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential valgrind
+      - name: Build
+        run: make
+      - name: Run unit tests
+        run: ./build/test_alloc
+      - name: Valgrind check
+        run: valgrind --leak-check=full --show-leak-kinds=all ./build/test_alloc
