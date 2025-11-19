@@ -15,3 +15,8 @@ Sostituto minimale di `malloc/free`:
 ## Verifica
 - `make && ./build/test_alloc`
 - `valgrind --leak-check=full --show-leak-kinds=all ./build/test_alloc`
+
+### Personal notes (SK)
+- Ho aggiunto commenti nel codice per spiegare la logica del buddy allocator.
+- Ho testato tutte le funzioni di allocazione con valgrind.
+- Il progetto è stato organizzato e versionato su GitHub.
